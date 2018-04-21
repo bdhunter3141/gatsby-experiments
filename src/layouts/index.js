@@ -5,6 +5,7 @@ const axios = require('axios');
 import Header from '../components/header'
 import './index.css'
 import Cookies from 'js-cookie'
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider'
 
 export const query = graphql`
   query SiteTitleQuery {
@@ -39,6 +40,7 @@ export default class Layout extends Component {
 
   render() {
     return (
+      <MuiThemeProvider>
       <div>
         <Helmet
           title={this.props.data.site.siteMetadata.title}
@@ -58,6 +60,7 @@ export default class Layout extends Component {
         >
         </div>
       </div>
+      </MuiThemeProvider>
     )
   }
 };
