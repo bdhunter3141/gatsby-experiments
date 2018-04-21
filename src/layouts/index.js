@@ -4,6 +4,7 @@ import Helmet from 'react-helmet'
 const axios = require('axios');
 import Header from '../components/header'
 import './index.css'
+import Cookies from 'js-cookie'
 
 export const query = graphql`
   query SiteTitleQuery {
@@ -29,6 +30,7 @@ export default class Layout extends Component {
     axios.post(`${process.env.API_AUTH_URL}`, `grant_type=client_credentials&client_id=${process.env.API_CLIENT_ID}&client_secret=${process.env.API_CLIENT_SECRET}`)
       .then((res) => {
         this.setState({ token: res.data.access_token})
+        Cookies.set('token', res.data.access_token)
       })
       .catch((error) => {
         console.log(error);
@@ -54,7 +56,6 @@ export default class Layout extends Component {
             paddingTop: 0,
           }}
         >
-          <p>{this.state.token}</p>
         </div>
       </div>
     )
