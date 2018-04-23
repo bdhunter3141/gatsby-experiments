@@ -1,15 +1,61 @@
-import React from 'react'
+import React, { Component } from 'react'
 import Link from 'gatsby-link'
-import RaisedButton from 'material-ui/RaisedButton'
+import FlatButton from 'material-ui/RaisedButton'
+import Popover from 'material-ui/Popover';
+import Menu from 'material-ui/Menu';
+import MenuItem from 'material-ui/MenuItem';
 
-const Header = ({ siteTitle }) => (
+export default class Header extends Component {
+  state = {
+    dealDropdownOpen: false,
+    exitDropdownOpen: false,
+    userDropdownOpen: false,
+    open: false,
+  }
+
+  handleClick = (event) => {
+    // This prevents ghost click.
+    event.preventDefault();
+
+    this.setState({
+      open: true,
+      anchorEl: event.currentTarget,
+    });
+  };
+
+  handleRequestClose = () => {
+    this.setState({
+      open: false,
+    });
+  };
+
+  render() {
+    return (
   <div
     style={{
       background: 'rebeccapurple',
       marginBottom: '1.45rem',
     }}
-  >
-    <RaisedButton label="Primary" primary={true} />
+  ><div>
+          <FlatButton
+            onClick={this.handleClick}
+            label="Click me"
+          />
+          <Popover
+            open={this.state.open}
+            anchorEl={this.state.anchorEl}
+            anchorOrigin={{ horizontal: 'left', vertical: 'bottom' }}
+            targetOrigin={{ horizontal: 'left', vertical: 'top' }}
+            onRequestClose={this.handleRequestClose}
+          >
+            <Menu>
+              <MenuItem primaryText="Refresh" />
+              <MenuItem primaryText="Help &amp; feedback" />
+              <MenuItem primaryText="Settings" />
+              <MenuItem primaryText="Sign out" />
+            </Menu>
+          </Popover>
+    </div>
     <div
       style={{
         margin: '0 auto',
@@ -25,11 +71,11 @@ const Header = ({ siteTitle }) => (
             textDecoration: 'none',
           }}
         >
-          {siteTitle}
+Hello
         </Link>
       </h1>
     </div>
   </div>
 )
-
-export default Header
+  }
+}
